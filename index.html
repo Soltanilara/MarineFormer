@@ -55,7 +55,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">MarineFormer: A Transformer-based Navigation Policy Model for Collision Avoidance in Marine Environment</h1>
+          <h1 class="title is-1 publication-title">MarineFormer: A Spatio-Temporal Attention Model for USV Navigation in Dynamic Marine Environments</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://www.linkedin.com/in/ehsan-kazemi/">Ehsan Kazemi</a> and </span>
@@ -114,8 +114,8 @@
     <ul>
     <li><h2 class="title is-3">Scenario I</h2>
         <ul>
-            <li>10 dynamic obstacles</li>
-            <li>5 static obstacles</li>
+          <li><b>10 dynamic obstacles</b></li>
+          <li><b>5 static obstacles</b></li>
         </ul>
     </li>
     </ul>
@@ -147,8 +147,8 @@
     <ul>
     <li><h2 class="title is-3">Scenario II</h2>
         <ul>
-            <li>25 dynamic obstacles</li>
-            <li>10 static obstacles</li>
+            <li><b>25 dynamic obstacles</b></li>
+            <li><b>10 static obstacles</b></li>
         </ul>
     </li>
     </ul>
@@ -197,25 +197,20 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            In this work, we investigate the problem of Unmanned Surface Vehicle (USV) navigation in a dense marine environment
-            with a high-intensity current flow. The complexities arising from static and dynamic obstacles and the disturbance
-            forces caused by current flow render existing navigation protocols inadequate for ensuring safety and avoiding
-            collisions at sea. To learn a safe and efficient robot policy, we propose a novel methodology that leverages attention
-            mechanisms to capture heterogeneous interactions of the agents with the static and moving obstacles and the flow disturbances
-            from the environment in space and time. In particular, we refine a temporal function with MarineFormer, a Transformer navigation
-            policy for spatially variable {\bf Marine} environment, trained end-to-end with reinforcement learning (RL). MarineFormer uses
-            foundational spatio-temporal graph attention with transformer architecture to process spatial attention and temporal sequences
-            in an environment that simulates a 2D turbulent marine condition. We propose architectural modifications that improve the stability
-            and learning speed of the recurrent models. The flow velocity estimation, which can be derived from flow simulations or sensors,
-            is incorporated into a model-free RL framework to prevent the robot from entering into high-intensity current flow regions
-            including intense vortices, while potentially leveraging the flow to assist in transportation. The investigated 2D marine environment
-            encompasses flow singularities, including vortices, sinks, and sources, representing fundamental planar flow patterns associated
-            with flood or maritime thunderstorms. Our proposed method is trained with a new reward model to deal with static and dynamic obstacles
-            and disturbances from the current flow. We evaluate the performance of the proposed deep policy versus the state-of-the-art RL methods
-            and the classical planners. Our method outperforms the existing methods, obtaining $20\%$ improvement over the state-of-the-art baseline
-            model for marine navigation. We attribute the superior performance of the proposed method to several factors including the acquisition
-            of critical sensory information from the environment, optimal design of the network architecture, and the reward functions, tailored
-            to the nature of the obstacles and the environmental disturbances.
+            Navigating autonomously in marine environments with dynamic and static obstacles,
+            and strong flow disturbances, such as in high-flow rivers, poses significant challenges
+            for USVs. To address these challenges, we propose a novel methodology that leverages
+            two types of attention: spatial attention, which learns to integrate diverse environmental
+            factors and sensory information into navigation decisions, and temporal attention within
+            a transformer framework to account for the dynamic, continuously changing nature of the environment.
+            We devise MarineFormer, a Trans<b>former</b>-based navigation policy for dynamic <b>Marine</b> environments,
+            trained end-to-end through reinforcement learning (RL). At its core, MarineFormer uses graph attention
+            to capture spatial information and a transformer architecture to process temporal sequences
+            in an environment that simulates a 2D turbulent marine condition involving multiple static
+            and dynamic obstacles. We extensively evaluate the performance of the proposed method versus
+            the state-of-the-art RL methods, as well as other classical planners. Our approach outperforms
+            the state-of-the-art by nearly $20\%$ in episode completion success rate and additionally enhances
+            the USV's path length efficiency.
           </p>
         </div>
       </div>
