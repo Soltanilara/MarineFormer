@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MarineFormer: Navigation Policy in Marin Environment">
+  <meta name="keywords" content="Reinforcement Learning, Obstacle Avoidance, Transformer, Attention Model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarineFormer: Navigation Policy in Marin Environment</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MarineFormer: A Transformer-based Navigation Policy Model for Collision Avoidance in Marine Environment</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/ehsan-kazemi/">Ehsan Kazemi</a> and </span>
+            <span class="author-block">
+              <a href="https://soltanilab.sf.ucdavis.edu/">Iman Soltani</a>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of California, Davis</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2410.13973"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv </span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ehsankf/MarineFormer"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon!)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+<!--               <span class="link-block">
+                <a href="https://drive.google.com/drive/folders/15Kr_3JVv1rEoCQL3dOU2An-IePPNsk_6"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div> -->
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <body>
+  <div class="columns is-centered has-text-centered">
+  <div>
+    <ul>
+    <li><h2 class="title is-3">Scenario I</h2>
+        <ul>
+            <li>10 dynamic obstacles</li>
+            <li>5 static obstacles</li>
+        </ul>
+    </li>
+    </ul>
+  </div>
+  </div>
+
+
+  <div class="row">
+  <div class="column">
+    <span>
+      <img src="./static/images/Env10_5/27776_Traj/1433.gif" alt="Scenario Collision Avoidance" style="width:100%">
+    </span>
+  </div>
+  <div class="column">
+    <img src="./static/images/Env10_5/27776_Traj/1663.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./static/images/Env10_5/27776_Traj/1671.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./static/images/Env10_5/27776_Traj/1691.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  </div>
+  </body>
+
+  <body>
+  <div class="columns is-centered has-text-centered">
+  <div>
+    <ul>
+    <li><h2 class="title is-3">Scenario II</h2>
+        <ul>
+            <li>25 dynamic obstacles</li>
+            <li>10 static obstacles</li>
+        </ul>
+    </li>
+    </ul>
+  </div>
+  </div>
+    <div class="row">
+  <div class="column">
+    <span>
+      <img src="./static/images/Env25_10/27776_Traj/1429.gif" alt="Scenario Collision Avoidance" class="custom_img">
+    </span>
+  </div>
+  <div class="column">
+    <img src="./static/images/Env25_10/27776_Traj/1529.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./static/images/Env25_10/27776_Traj/1549.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./static/images/Env25_10/27776_Traj/1597.gif" alt="Scenario Collision Avoidance" style="width:100%">
+  </div>
+  </div>
+  </body>
+
+  <!--<div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/visual.gif"/>
+    </div>
+    <div>-
+      <p>
+        FreeEditor can synthesize novel edited views in a zero-shot manner without scene-specific re-training of the model.
+        To edit a scene, we take only a single image as the starting view and edit it using a T2I diffusion model. Based on this starting view, we can render novel edited target views.
+      </p>
+    </div>
+  </div>-->
+</section>
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this work, we investigate the problem of Unmanned Surface Vehicle (USV) navigation in a dense marine environment
+            with a high-intensity current flow. The complexities arising from static and dynamic obstacles and the disturbance
+            forces caused by current flow render existing navigation protocols inadequate for ensuring safety and avoiding
+            collisions at sea. To learn a safe and efficient robot policy, we propose a novel methodology that leverages attention
+            mechanisms to capture heterogeneous interactions of the agents with the static and moving obstacles and the flow disturbances
+            from the environment in space and time. In particular, we refine a temporal function with MarineFormer, a Transformer navigation
+            policy for spatially variable {\bf Marine} environment, trained end-to-end with reinforcement learning (RL). MarineFormer uses
+            foundational spatio-temporal graph attention with transformer architecture to process spatial attention and temporal sequences
+            in an environment that simulates a 2D turbulent marine condition. We propose architectural modifications that improve the stability
+            and learning speed of the recurrent models. The flow velocity estimation, which can be derived from flow simulations or sensors,
+            is incorporated into a model-free RL framework to prevent the robot from entering into high-intensity current flow regions
+            including intense vortices, while potentially leveraging the flow to assist in transportation. The investigated 2D marine environment
+            encompasses flow singularities, including vortices, sinks, and sources, representing fundamental planar flow patterns associated
+            with flood or maritime thunderstorms. Our proposed method is trained with a new reward model to deal with static and dynamic obstacles
+            and disturbances from the current flow. We evaluate the performance of the proposed deep policy versus the state-of-the-art RL methods
+            and the classical planners. Our method outperforms the existing methods, obtaining $20\%$ improvement over the state-of-the-art baseline
+            model for marine navigation. We attribute the superior performance of the proposed method to several factors including the acquisition
+            of critical sensory information from the environment, optimal design of the network architecture, and the reward functions, tailored
+            to the nature of the obstacles and the environmental disturbances.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+          <img src="./static/images/MarineFormer.png"/>
+    </div>
+    <div>
+    <p>
+     <!--Overview of our proposed method. We train a generalized NeRF (G(.)) that takes a single edited starting view and M source
+views to render a novel target view. Here, ”Edited Target View” is not the input to the model rather will be rendered and works as the ground truth for the
+prediction of G(.). In G(.) we employ a special Edit Transformer that utilizes: cross-attention to produce style-informed source feature maps
+that will be aggregated through an Epipolar Transformer.-->
+    </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experimental Results</h2>
+        <!-- Interpolating. -->
+        <h3 class="title is-4">Comparison: Scenario I</h3>
+        <div class="content has-text-justified">
+            <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env10_5/27776_Traj/1951_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1959_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1979_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1985_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              </div>
+              <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env10_5/27776_Traj/1917_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1929_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1941_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1945_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              </div>
+              <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env10_5/27776_Traj/1765_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1827_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1859_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1873_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              </div>
+              <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env10_5/27776_Traj/1723_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1737_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1743_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1751_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              </div>
+             <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env10_5/27776_Traj/1691_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1693_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1699_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1715_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+             </div>
+          <div class="row">
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1433_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1663_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env10_5/27776_Traj/1671_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <span>
+                  <img src="" alt="" style="width:100%">
+                </span>
+              </div>
+             </div>
+          <!-- Interpolating. -->
+        <h3 class="title is-4">Comparison: Scenario II</h3>
+        <div class="content has-text-justified">
+            <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env25_10/27776_Traj/2183_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2195_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2357_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2423_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+            </div>
+          <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env25_10/27776_Traj/1705_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2167_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2177_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/2181_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+            </div>
+          <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env25_10/27776_Traj/1673_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1685_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1691_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1693_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+            </div>
+        <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env25_10/27776_Traj/1619_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1651_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1661_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1667_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+            </div>
+          <div class="row">
+              <div class="column">
+                <span>
+                  <img src="./static/images/Env25_10/27776_Traj/1529_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+                </span>
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1549_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1569_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+              <div class="column">
+                <img src="./static/images/Env25_10/27776_Traj/1597_traj.png" alt="Scenario Collision Avoidance" style="width:100%">
+              </div>
+            </div>
+        </div>
+
+          <p>
+            <!-- We obtain similar performance as compared to other SOTA techniques.
+            To edit a scene, it only takes around 3 minutes as compared to 70 minutes in SOTA.-->
+          </p>
+        </div>
+          <!-- <img src="./static/images/Comparison.png"
+               alt="Interpolate start reference image."/> -->
+        <div class="content has-text-justified">
+          <p>
+            <!-- More text-based 3D editing results. Free-Editor can handle the diverse prompts-based generation quite well. -->
+          </p>
+        </div>
+          <!-- <img src="./static/images/free_supple.png"/> -->
+        </div>
+  </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{kazemi2024marineformertransformerbasednavigationpolicy,
+      title={MarineFormer: A Transformer-based Navigation Policy Model for Collision Avoidance in Marine Environment}, 
+      author={Ehsan Kazemi and Iman Soltani},
+      year={2024},
+      eprint={2410.13973},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2410.13973}, 
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://scholar.google.com/citations?user=e9H-xpcAAAAJ&hl=en">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/ehsankf/MarineFormer" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+             We follow <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of Nerfies for creating this website,
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
