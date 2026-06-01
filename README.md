@@ -1,16 +1,17 @@
 # MarineFromer
 
-This is the repository that contains the project page of MarineFormer Paper. 
+This repository contains the project page for the MarineFormer paper.
 
-If you find our paper useful for your work please cite:
+If you find this work useful for your research, please consider citing our paper:
 ```
-@misc{kazemi2024marineformer,
-      title={MarineFormer: A Transformer-based Navigation Policy Model for Collision Avoidance in Marine Environment}, 
-      author={Ehsan Kazemi and Iman Soltani},
-      year={2024},
-      eprint={},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{kazemi2026marineformer,
+  title={MarineFormer: A flow-aware spatio-temporal attention model for USV navigation in dynamic marine environments},
+  author={Kazemi, Ehsan and Gao, Dechen and Soltani, Iman},
+  journal={Ocean Engineering},
+  volume={358},
+  pages={125718},
+  year={2026},
+  publisher={Elsevier}
 }
 ```
 
